@@ -6,7 +6,7 @@
 
 ## React ant-virtual-table
 [![Build Status](https://travis-ci.org/ctq123/ant-virtual-table.svg?branch=master&foo=bar)](https://travis-ci.org/ctq123/ant-virtual-table)
-[![NPM version](https://img.shields.io/badge/npm-v5.7.1-green.svg?style=flat)](https://www.npmjs.com/package/rc-anchor)
+[![NPM version](https://img.shields.io/badge/npm-v5.7.1-green.svg?style=flat)](https://www.npmjs.com/package/ant-virtual-table)
 
 ## Demo
 ![image](https://github.com/ctq123/ant-virtual-table/blob/master/examples/gif/example1.gif)
