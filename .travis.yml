@@ -1,0 +1,16 @@
+language: node_js
+
+sudo: false
+
+notifications:
+  email:
+  - chengtianqing123@sina.cn
+
+node_js:
+  - "4"
+
+install:
+  - npm install -g codecov 
+
+script:
+  - codecov
