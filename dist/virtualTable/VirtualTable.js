@@ -75,19 +75,19 @@ var VirtualTable = function (_Component) {
         bottomBlankHeight = bottomBlankHeight > 0 ? bottomBlankHeight : 0;
         var startIndex = Math.floor(scrollTop / rowHeight);
         var visibleRowCount = Math.ceil(visibleHeight / rowHeight);
-        console.log('===================');
-        console.log('rowHeight', rowHeight);
-        console.log('totalHeight', totalHeight);
-        console.log('visibleHeight', visibleHeight);
-        console.log('scrollTop', scrollTop);
-        console.log('topBlankHeight', topBlankHeight);
-        console.log('bottomBlankHeight', bottomBlankHeight);
-        console.log('startIndex', startIndex);
-        console.log('visibleRowCount', visibleRowCount);
+        // console.log('===================')
+        // console.log('rowHeight', rowHeight)
+        // console.log('totalHeight', totalHeight)
+        // console.log('visibleHeight', visibleHeight)
+        // console.log('scrollTop', scrollTop)
+        // console.log('topBlankHeight', topBlankHeight)
+        // console.log('bottomBlankHeight', bottomBlankHeight)
+        // console.log('startIndex', startIndex)
+        // console.log('visibleRowCount', visibleRowCount)
         var slideUpHeight = Math.abs(topBlankHeight - _this.state.topBlankHeight);
         var slideDownHeight = Math.abs(bottomBlankHeight - _this.state.bottomBlankHeight);
-        console.log('slideUpHeight', slideUpHeight);
-        console.log('slideDownHeight', slideDownHeight);
+        // console.log('slideUpHeight', slideUpHeight)
+        // console.log('slideDownHeight', slideDownHeight)
 
         // const topBlankMarginTop = slideUpHeight < rowHeight ? slideUpHeight : 0
         var isValid = slideUpHeight >= rowHeight;
@@ -130,9 +130,7 @@ var VirtualTable = function (_Component) {
         this.refScroll.addEventListener('scroll', this.listenEvent);
       }
 
-      // 创建顶部填充div
       this.createTopFillNode();
-      // 创建底部填充div
       this.createBottomFillNode();
     }
   }, {
@@ -200,8 +198,6 @@ var VirtualTable = function (_Component) {
 
       var _ref3 = dataSource || [],
           length = _ref3.length;
-      // !rowHeight && this.setRowHeight()
-
 
       var startIn = this.getValidValue(startIndex, 0, length);
       var endIn = startIndex + visibleRowCount;
@@ -210,7 +206,7 @@ var VirtualTable = function (_Component) {
         endIn = length > thresholdCount ? thresholdCount : length;
       }
       endIn = this.getValidValue(endIn, startIndex, length);
-      console.log('this.state.rowHeight', rowHeight);
+      // console.log('this.state.rowHeight', rowHeight)
 
       return _react2.default.createElement(
         _react.Fragment,

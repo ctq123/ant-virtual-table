@@ -36,9 +36,7 @@ class VirtualTable extends Component {
       this.refScroll.addEventListener('scroll', this.listenEvent)
     }
 
-    // 创建顶部填充div
     this.createTopFillNode()
-    // 创建底部填充div
     this.createBottomFillNode()
   }
 
@@ -86,19 +84,19 @@ class VirtualTable extends Component {
       bottomBlankHeight = bottomBlankHeight > 0 ? bottomBlankHeight : 0
       let startIndex = Math.floor(scrollTop / rowHeight)
       let visibleRowCount = Math.ceil(visibleHeight / rowHeight)
-      console.log('===================')
-      console.log('rowHeight', rowHeight)
-      console.log('totalHeight', totalHeight)
-      console.log('visibleHeight', visibleHeight)
-      console.log('scrollTop', scrollTop)
-      console.log('topBlankHeight', topBlankHeight)
-      console.log('bottomBlankHeight', bottomBlankHeight)
-      console.log('startIndex', startIndex)
-      console.log('visibleRowCount', visibleRowCount)
+      // console.log('===================')
+      // console.log('rowHeight', rowHeight)
+      // console.log('totalHeight', totalHeight)
+      // console.log('visibleHeight', visibleHeight)
+      // console.log('scrollTop', scrollTop)
+      // console.log('topBlankHeight', topBlankHeight)
+      // console.log('bottomBlankHeight', bottomBlankHeight)
+      // console.log('startIndex', startIndex)
+      // console.log('visibleRowCount', visibleRowCount)
       const slideUpHeight = Math.abs(topBlankHeight - this.state.topBlankHeight)
       const slideDownHeight = Math.abs(bottomBlankHeight - this.state.bottomBlankHeight)
-      console.log('slideUpHeight', slideUpHeight)
-      console.log('slideDownHeight', slideDownHeight)
+      // console.log('slideUpHeight', slideUpHeight)
+      // console.log('slideDownHeight', slideDownHeight)
 
       // const topBlankMarginTop = slideUpHeight < rowHeight ? slideUpHeight : 0
       let isValid = slideUpHeight >= rowHeight
@@ -132,14 +130,13 @@ class VirtualTable extends Component {
     const { dataSource, ...rest } = this.props
     const { topBlankHeight, bottomBlankHeight, startIndex, visibleRowCount, rowHeight, thresholdCount } = this.state
     const { length } = dataSource || []
-    // !rowHeight && this.setRowHeight()
     let startIn = this.getValidValue(startIndex, 0, length)
     let endIn = startIndex + visibleRowCount
     if (!endIn) { // 初始化渲染数据
       endIn = length > thresholdCount ? thresholdCount : length
     }
     endIn = this.getValidValue(endIn, startIndex, length)
-    console.log('this.state.rowHeight', rowHeight)
+    // console.log('this.state.rowHeight', rowHeight)
 
     return (
       <Fragment>

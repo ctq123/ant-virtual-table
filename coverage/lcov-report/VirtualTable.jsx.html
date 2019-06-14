@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for VirtualTable.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> VirtualTable.jsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">46.88% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>30/64</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.28% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>10/47</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">46.88% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>30/64</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component, Fragment } from 'react'
+import ReactDOM from 'react-dom'
+import { Table } from 'antd'
+import throttle from 'lodash.throttle'
+&nbsp;
+class VirtualTable extends Component {
+  static FillNode ({ height, node, marginTop, marginBottom }) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (node) {
+<span class="cstat-no" title="statement not covered" >      marginTop = marginTop || 0</span>
+<span class="cstat-no" title="statement not covered" >      marginBottom = marginBottom || 0</span>
+<span class="cstat-no" title="statement not covered" >      return ReactDOM.createPortal(</span>
+        &lt;div style={{ height: `${height}px`, marginTop: `${marginTop}px`, marginBottom: `${marginBottom}px` }} /&gt;,
+        node
+      )
+    }
+    return null
+  }
+  constructor (props) {
+    super(props)
+    this.state = {
+      startIndex: 0,
+      visibleRowCount: 0,
+      thresholdCount: 40,
+      rowHeight: 0,
+      topBlankHeight: 0,
+      bottomBlankHeight: 0
+    }
+  }
+&nbsp;
+  componentDidMount () {
+    this.refScroll = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body')[0]
+&nbsp;
+    this.listenEvent = throttle(this.handleScrollEvent, 50)
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this.refScroll) {
+      this.refScroll.addEventListener('scroll', this.listenEvent)
+    }
+&nbsp;
+    this.createTopFillNode()
+    this.createBottomFillNode()
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  co</span>mponentWillUnmount () {
+<span class="cstat-no" title="statement not covered" >    if (this.refScroll) {</span>
+<span class="cstat-no" title="statement not covered" >      this.refScroll.removeEventListener('scroll', this.listenEvent)</span>
+    }
+  }
+&nbsp;
+  createTopFillNode () {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this.refScroll) {
+      const ele = document.createElement('div')
+      this.refScroll.insertBefore(ele, this.refScroll.firstChild)
+      this.refTopNode = ele
+    }
+  }
+&nbsp;
+  createBottomFillNode () {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this.refScroll) {
+      const ele = document.createElement('div')
+      this.refScroll.appendChild(ele)
+      this.refBottomNode = ele
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>tRowHeight () {
+<span class="cstat-no" title="statement not covered" >    this.refTable = this.refScroll.getElementsByTagName('table')[0]</span>
+<span class="cstat-no" title="statement not covered" >    if (this.refTable) {</span>
+      const tr = <span class="cstat-no" title="statement not covered" >this.refTable.getElementsByTagName('tr')[0]</span>
+      const rowHeight = <span class="cstat-no" title="statement not covered" >(tr &amp;&amp; tr.clientHeight) || 0</span>
+<span class="cstat-no" title="statement not covered" >      this.state.rowHeight = rowHeight</span>
+    }
+  }
+&nbsp;
+  handleScrollEvent = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+    const { dataSource } = <span class="cstat-no" title="statement not covered" >this.props</span>
+    const { rowHeight, thresholdCount } = <span class="cstat-no" title="statement not covered" >this.state</span>
+    const { length } = <span class="cstat-no" title="statement not covered" >dataSource || []</span>
+<span class="cstat-no" title="statement not covered" >    if (rowHeight &amp;&amp; length &gt; thresholdCount) {</span>
+      const totalHeight = <span class="cstat-no" title="statement not covered" >rowHeight * length</span>
+      const visibleHeight = <span class="cstat-no" title="statement not covered" >this.refScroll.clientHeight </span>// 显示的高度
+      const scrollTop = <span class="cstat-no" title="statement not covered" >this.refScroll.scrollTop </span>// 滑动的距离
+      let topBlankHeight = <span class="cstat-no" title="statement not covered" >scrollTop</span>
+      let bottomBlankHeight = <span class="cstat-no" title="statement not covered" >totalHeight - visibleHeight - topBlankHeight</span>
+<span class="cstat-no" title="statement not covered" >      bottomBlankHeight = bottomBlankHeight &gt; 0 ? bottomBlankHeight : 0</span>
+      let startIndex = <span class="cstat-no" title="statement not covered" >Math.floor(scrollTop / rowHeight)</span>
+      let visibleRowCount = <span class="cstat-no" title="statement not covered" >Math.ceil(visibleHeight / rowHeight)</span>
+      // console.log('===================')
+      // console.log('rowHeight', rowHeight)
+      // console.log('totalHeight', totalHeight)
+      // console.log('visibleHeight', visibleHeight)
+      // console.log('scrollTop', scrollTop)
+      // console.log('topBlankHeight', topBlankHeight)
+      // console.log('bottomBlankHeight', bottomBlankHeight)
+      // console.log('startIndex', startIndex)
+      // console.log('visibleRowCount', visibleRowCount)
+      const slideUpHeight = <span class="cstat-no" title="statement not covered" >Math.abs(topBlankHeight - this.state.topBlankHeight)</span>
+      const slideDownHeight = <span class="cstat-no" title="statement not covered" >Math.abs(bottomBlankHeight - this.state.bottomBlankHeight)</span>
+      // console.log('slideUpHeight', slideUpHeight)
+      // console.log('slideDownHeight', slideDownHeight)
+&nbsp;
+      // const topBlankMarginTop = slideUpHeight &lt; rowHeight ? slideUpHeight : 0
+      let isValid = <span class="cstat-no" title="statement not covered" >slideUpHeight &gt;= rowHeight</span>
+<span class="cstat-no" title="statement not covered" >      isValid = isValid || slideDownHeight &gt;= rowHeight</span>
+<span class="cstat-no" title="statement not covered" >      isValid = isValid || startIndex === 0</span>
+<span class="cstat-no" title="statement not covered" >      if (isValid) {</span>
+<span class="cstat-no" title="statement not covered" >        startIndex = startIndex - 5</span>
+<span class="cstat-no" title="statement not covered" >        visibleRowCount = visibleRowCount + 5</span>
+<span class="cstat-no" title="statement not covered" >        this.setState({</span>
+          startIndex,
+          visibleRowCount,
+          topBlankHeight,
+          bottomBlankHeight
+        })
+      }
+    } else {
+<span class="cstat-no" title="statement not covered" >      this.setRowHeight()</span>
+    }
+  }
+&nbsp;
+  getValidValue (val, min = <span class="branch-0 cbranch-no" title="branch not covered" >0,</span> max = <span class="branch-0 cbranch-no" title="branch not covered" >40)</span> {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (val &lt; min) {
+<span class="cstat-no" title="statement not covered" >      return min</span>
+    } else <span class="missing-if-branch" title="if path not taken" >I</span>if (val &gt; max) {
+<span class="cstat-no" title="statement not covered" >      return max</span>
+    }
+    return val
+  }
+&nbsp;
+  render () {
+    const { dataSource, ...rest } = this.props
+    const { topBlankHeight, bottomBlankHeight, startIndex, visibleRowCount, rowHeight, thresholdCount } = this.state
+    const { length } = dataSource || <span class="branch-1 cbranch-no" title="branch not covered" >[]</span>
+    let startIn = this.getValidValue(startIndex, 0, length)
+    let endIn = startIndex + visibleRowCount
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!endIn) { // 初始化渲染数据
+      endIn = length &gt; thresholdCount ? <span class="branch-0 cbranch-no" title="branch not covered" >thresholdCount </span>: length
+    }
+    endIn = this.getValidValue(endIn, startIndex, length)
+    // console.log('this.state.rowHeight', rowHeight)
+&nbsp;
+    return (
+      &lt;Fragment&gt;
+        &lt;VirtualTable.FillNode
+          height={topBlankHeight}
+          node={this.refTopNode}
+          marginBottom={-rowHeight}
+        /&gt;
+        &lt;Table
+          {...rest}
+          dataSource={(dataSource || <span class="branch-1 cbranch-no" title="branch not covered" >[])</span>.slice(startIn, endIn)}
+        /&gt;
+        &lt;VirtualTable.FillNode
+          height={bottomBlankHeight}
+          node={this.refBottomNode}
+        /&gt;
+      &lt;/Fragment&gt;
+    )
+  }
+}
+&nbsp;
+export default VirtualTable
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Jun 14 2019 20:00:59 GMT+0800 (中国标准时间)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>
