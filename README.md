@@ -2,7 +2,7 @@
 
 English | [简体中文](./README-zh_CN.md) 
 
-This is an ant.design virtual table, which is used to solve the problem of page jamming during big data rendering. This component encapsulates the Table component in ant.desigin and its properties are completely consistent with the original component Table. Note that the default threshold of the component is 40 data. Only 40 data will be rendered first during initialization. Only when the data volume is greater than 40 will it be virtual rendered; otherwise, the form data will not be virtual rendered. It will all be rendered (because the amount of data <=40 does not have the problem of rendering the card at all), the example handles rendering 100,000 pieces of data, and the page is very smooth.
+This is an ant.design virtual table, which is used to solve the problem of page jamming during big data rendering. This component encapsulates the Table component in ant.desigin and its properties are completely consistent with the original component Table [AntDesign Table](https://ant.design/components/table-cn/). Note that the default threshold of the component is 40 data. Only 40 data will be rendered first during initialization. Only when the data volume is greater than 40 will it be virtual rendered; otherwise, the form data will not be virtual rendered. It will all be rendered (because the amount of data <=40 does not have the problem of rendering the card at all), the example handles rendering 100,000 pieces of data, and the page is very smooth.
 
 ## React ant-virtual-table
 [![Build Status](https://travis-ci.org/ctq123/ant-virtual-table.svg?branch=master&foo=bar)](https://travis-ci.org/ctq123/ant-virtual-table)
