@@ -29,7 +29,10 @@
     "url": "git+https://github.com/ctq123/ant-virtual-table.git"
   },
   "keywords": [
-    "virtual-table"
+    "virtual-table",
+    "ant",
+    "ant-table",
+    "virtual"
   ],
   "author": "tqcheng",
   "license": "ISC",

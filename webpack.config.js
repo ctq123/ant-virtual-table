@@ -21,6 +21,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
+  devtool: 'source-map',
   stats: {
     entrypoints: false,
     children: false,

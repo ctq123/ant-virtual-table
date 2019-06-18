@@ -76,7 +76,7 @@ class VirtualTable extends Component {
     const { rowHeight, thresholdCount } = this.state
     const { length } = dataSource || []
     if (rowHeight && length > thresholdCount) {
-      const totalHeight = rowHeight * length
+      let totalHeight = rowHeight * length
       const visibleHeight = this.refScroll.clientHeight // 显示的高度
       const scrollTop = this.refScroll.scrollTop // 滑动的距离
       let topBlankHeight = scrollTop
@@ -117,6 +117,11 @@ class VirtualTable extends Component {
     }
   }
 
+  getIndexByScrollTop(rowHeight, scrollTop) {
+    const index = (scrollTop - scrollTop % rowHeight) / rowHeight
+    return index
+  }
+
   getValidValue (val, min = 0, max = 40) {
     if (val < min) {
       return min
@@ -137,6 +142,7 @@ class VirtualTable extends Component {
     }
     endIn = this.getValidValue(endIn, startIndex, length)
     // console.log('this.state.rowHeight', rowHeight)
+    const data = (dataSource || []).slice(startIn, endIn)
 
     return (
       <Fragment>
@@ -147,7 +153,7 @@ class VirtualTable extends Component {
         />
         <Table
           {...rest}
-          dataSource={(dataSource || []).slice(startIn, endIn)}
+          dataSource={data}
         />
         <VirtualTable.FillNode
           height={bottomBlankHeight}
