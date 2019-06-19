@@ -23,7 +23,8 @@ class VirtualTable extends Component {
       thresholdCount: 40,
       rowHeight: 0,
       topBlankHeight: 0,
-      bottomBlankHeight: 0
+      bottomBlankHeight: 0,
+      maxTotalHeight: 15000000
     }
   }
 
@@ -120,6 +121,14 @@ class VirtualTable extends Component {
   getIndexByScrollTop(rowHeight, scrollTop) {
     const index = (scrollTop - scrollTop % rowHeight) / rowHeight
     return index
+  }
+
+  handleBlankHeight({length, rowHeight, maxTotalHeight, visibleHeight, scrollTop}) {
+    let totalHeight = length * rowHeight
+    if (totalHeight > maxTotalHeight) {
+      totalHeight = maxTotalHeight
+      rowHeight = totalHeight / length
+    }
   }
 
   getValidValue (val, min = 0, max = 40) {
