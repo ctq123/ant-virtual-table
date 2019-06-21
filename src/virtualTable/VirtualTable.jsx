@@ -129,6 +129,7 @@ class VirtualTable extends Component {
       totalHeight = maxTotalHeight
       rowHeight = totalHeight / length
     }
+    
   }
 
   getValidValue (val, min = 0, max = 40) {
