@@ -8,6 +8,7 @@ class VirtualTable extends Component {
     if (node) {
       marginTop = marginTop || 0
       marginBottom = marginBottom || 0
+      height = height || 0
       return ReactDOM.createPortal(
         <div style={{ height: `${height}px`, marginTop: `${marginTop}px`, marginBottom: `${marginBottom}px` }} />,
         node
@@ -123,14 +124,23 @@ class VirtualTable extends Component {
     return index
   }
 
-  handleBlankHeight({length, rowHeight, maxTotalHeight, visibleHeight, scrollTop}) {
+  handleBlankHeight(length, rowHeight, maxTotalHeight, visibleHeight, scrollTop) {
     let totalHeight = length * rowHeight
     if (totalHeight > maxTotalHeight) {
       totalHeight = maxTotalHeight
       rowHeight = totalHeight / length
     }
-    let topBlankHeight, bottomBlankHeight
-    topBlankHeight = scrollTop
+    let topBlankHeight, bottomBlankHeight, startIndex, visibleRowCount
+    startIndex = this.getIndexByScrollTop(rowHeight, scrollTop)
+    visibleRowCount = Math.ceil(visibleHeight / rowHeight)
+    topBlankHeight = rowHeight * startIndex
+    bottomBlankHeight = totalHeight - topBlankHeight - visibleHeight
+    return {
+      startIndex,
+      visibleRowCount,
+      topBlankHeight,
+      bottomBlankHeight
+    }
   }
 
   getValidValue (val, min = 0, max = 40) {
