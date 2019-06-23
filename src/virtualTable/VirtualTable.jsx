@@ -129,7 +129,8 @@ class VirtualTable extends Component {
       totalHeight = maxTotalHeight
       rowHeight = totalHeight / length
     }
-    
+    let topBlankHeight, bottomBlankHeight
+    topBlankHeight = scrollTop
   }
 
   getValidValue (val, min = 0, max = 40) {
