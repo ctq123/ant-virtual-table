@@ -32,7 +32,7 @@ class VirtualTable extends Component {
   componentDidMount () {
     this.refScroll = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body')[0]
 
-    this.listenEvent = throttle(this.handleScrollEvent, 50)
+    this.listenEvent = throttle(this.handleScrollEvent2, 50)
 
     if (this.refScroll) {
       this.refScroll.addEventListener('scroll', this.listenEvent)
@@ -119,6 +119,19 @@ class VirtualTable extends Component {
     }
   }
 
+  handleScrollEvent2 = () => {
+    const { dataSource } = this.props
+    const { rowHeight, thresholdCount, maxTotalHeight } = this.state
+    const { length } = dataSource || []
+    if (rowHeight && length > thresholdCount) {
+      const visibleHeight = this.refScroll.clientHeight // 显示的高度
+      const scrollTop = this.refScroll.scrollTop // 滑动的距离
+      this.handleBlankHeight(length, rowHeight, maxTotalHeight, visibleHeight, scrollTop)
+    } else {
+      this.setRowHeight()
+    }
+  }
+
   getIndexByScrollTop(rowHeight, scrollTop) {
     const index = (scrollTop - scrollTop % rowHeight) / rowHeight
     return index
@@ -129,17 +142,43 @@ class VirtualTable extends Component {
     if (totalHeight > maxTotalHeight) {
       totalHeight = maxTotalHeight
       rowHeight = totalHeight / length
+      scrollTop = scrollTop > maxTotalHeight ? maxTotalHeight : scrollTop
     }
     let topBlankHeight, bottomBlankHeight, startIndex, visibleRowCount
     startIndex = this.getIndexByScrollTop(rowHeight, scrollTop)
     visibleRowCount = Math.ceil(visibleHeight / rowHeight)
     topBlankHeight = rowHeight * startIndex
+    topBlankHeight = this.getValidValue(topBlankHeight, 0, totalHeight - visibleHeight)
     bottomBlankHeight = totalHeight - topBlankHeight - visibleHeight
-    return {
-      startIndex,
-      visibleRowCount,
-      topBlankHeight,
-      bottomBlankHeight
+    bottomBlankHeight = bottomBlankHeight > 0 ? bottomBlankHeight : 0
+
+    const slideUpHeight = Math.abs(topBlankHeight - this.state.topBlankHeight)
+    const slideDownHeight = Math.abs(bottomBlankHeight - this.state.bottomBlankHeight)
+
+    // console.log('===================')
+    // console.log('rowHeight', rowHeight)
+    // console.log('totalHeight', totalHeight)
+    // console.log('visibleHeight', visibleHeight)
+    // console.log('scrollTop', scrollTop)
+    // console.log('topBlankHeight', topBlankHeight)
+    // console.log('bottomBlankHeight', bottomBlankHeight)
+    // console.log('startIndex', startIndex)
+    // console.log('visibleRowCount', visibleRowCount)
+    // console.log('slideUpHeight', slideUpHeight)
+    // console.log('slideDownHeight', slideDownHeight)
+
+    let isValid = slideUpHeight >= rowHeight
+    isValid = isValid || slideDownHeight >= rowHeight
+    isValid = isValid || startIndex === 0
+    if (isValid) {
+      startIndex = startIndex - 5
+      visibleRowCount = visibleRowCount + 5
+      this.setState({
+        startIndex,
+        visibleRowCount,
+        topBlankHeight,
+        bottomBlankHeight
+      })
     }
   }
 
@@ -156,7 +195,7 @@ class VirtualTable extends Component {
     const { dataSource, ...rest } = this.props
     const { topBlankHeight, bottomBlankHeight, startIndex, visibleRowCount, rowHeight, thresholdCount } = this.state
     const { length } = dataSource || []
-    let startIn = this.getValidValue(startIndex, 0, length)
+    let startIn = this.getValidValue(startIndex, 0, length - visibleRowCount)
     let endIn = startIndex + visibleRowCount
     if (!endIn) { // 初始化渲染数据
       endIn = length > thresholdCount ? thresholdCount : length
