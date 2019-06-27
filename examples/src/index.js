@@ -38,7 +38,7 @@ function generateData () {
   const res = []
   const names = ['Tom', 'Marry', 'Jack', 'Lorry', 'Tanken', 'Salla']
   const sexs = ['male', 'female']
-  for (let i = 0; i < 1000000; i++) {
+  for (let i = 0; i < 10000000; i++) {
     let obj = {
       id: i,
       name: names[i % names.length] + i,

@@ -138,6 +138,7 @@ class VirtualTable extends Component {
   }
 
   handleBlankHeight(length, rowHeight, maxTotalHeight, visibleHeight, scrollTop) {
+    let oriRowHeight = rowHeight
     let totalHeight = length * rowHeight
     if (totalHeight > maxTotalHeight) {
       totalHeight = maxTotalHeight
@@ -146,26 +147,27 @@ class VirtualTable extends Component {
     }
     let topBlankHeight, bottomBlankHeight, startIndex, visibleRowCount
     startIndex = this.getIndexByScrollTop(rowHeight, scrollTop)
-    visibleRowCount = Math.ceil(visibleHeight / rowHeight)
+    visibleRowCount = Math.ceil(visibleHeight / oriRowHeight)
     topBlankHeight = rowHeight * startIndex
-    topBlankHeight = this.getValidValue(topBlankHeight, 0, totalHeight - visibleHeight)
+    topBlankHeight = this.getValidValue(topBlankHeight, 0, totalHeight)
     bottomBlankHeight = totalHeight - topBlankHeight - visibleHeight
     bottomBlankHeight = bottomBlankHeight > 0 ? bottomBlankHeight : 0
 
     const slideUpHeight = Math.abs(topBlankHeight - this.state.topBlankHeight)
     const slideDownHeight = Math.abs(bottomBlankHeight - this.state.bottomBlankHeight)
 
-    // console.log('===================')
-    // console.log('rowHeight', rowHeight)
-    // console.log('totalHeight', totalHeight)
-    // console.log('visibleHeight', visibleHeight)
-    // console.log('scrollTop', scrollTop)
-    // console.log('topBlankHeight', topBlankHeight)
-    // console.log('bottomBlankHeight', bottomBlankHeight)
-    // console.log('startIndex', startIndex)
-    // console.log('visibleRowCount', visibleRowCount)
-    // console.log('slideUpHeight', slideUpHeight)
-    // console.log('slideDownHeight', slideDownHeight)
+    console.log('===================')
+    console.log('oriRowHeight', oriRowHeight)
+    console.log('rowHeight', rowHeight)
+    console.log('totalHeight', totalHeight)
+    console.log('visibleHeight', visibleHeight)
+    console.log('scrollTop', scrollTop)
+    console.log('topBlankHeight', topBlankHeight)
+    console.log('bottomBlankHeight', bottomBlankHeight)
+    console.log('startIndex', startIndex)
+    console.log('visibleRowCount', visibleRowCount)
+    console.log('slideUpHeight', slideUpHeight)
+    console.log('slideDownHeight', slideDownHeight)
 
     let isValid = slideUpHeight >= rowHeight
     isValid = isValid || slideDownHeight >= rowHeight
