@@ -36,6 +36,7 @@ class VirtualTable extends Component {
 
     if (this.refScroll) {
       this.refScroll.addEventListener('scroll', this.listenEvent)
+      // this.refScroll.addEventListener('mousewheel', this.handleMouseWheel)
     }
 
     this.createTopFillNode()
@@ -45,6 +46,7 @@ class VirtualTable extends Component {
   componentWillUnmount () {
     if (this.refScroll) {
       this.refScroll.removeEventListener('scroll', this.listenEvent)
+      // this.refScroll.removeEventListener('mousewheel', this.handleMouseWheel)
     }
   }
 
@@ -73,60 +75,29 @@ class VirtualTable extends Component {
     }
   }
 
-  handleScrollEvent = () => {
-    const { dataSource } = this.props
-    const { rowHeight, thresholdCount } = this.state
-    const { length } = dataSource || []
-    if (rowHeight && length > thresholdCount) {
-      let totalHeight = rowHeight * length
-      const visibleHeight = this.refScroll.clientHeight // 显示的高度
-      const scrollTop = this.refScroll.scrollTop // 滑动的距离
-      let topBlankHeight = scrollTop
-      let bottomBlankHeight = totalHeight - visibleHeight - topBlankHeight
-      bottomBlankHeight = bottomBlankHeight > 0 ? bottomBlankHeight : 0
-      let startIndex = Math.floor(scrollTop / rowHeight)
-      let visibleRowCount = Math.ceil(visibleHeight / rowHeight)
-      // console.log('===================')
-      // console.log('rowHeight', rowHeight)
-      // console.log('totalHeight', totalHeight)
-      // console.log('visibleHeight', visibleHeight)
-      // console.log('scrollTop', scrollTop)
-      // console.log('topBlankHeight', topBlankHeight)
-      // console.log('bottomBlankHeight', bottomBlankHeight)
-      // console.log('startIndex', startIndex)
-      // console.log('visibleRowCount', visibleRowCount)
-      const slideUpHeight = Math.abs(topBlankHeight - this.state.topBlankHeight)
-      const slideDownHeight = Math.abs(bottomBlankHeight - this.state.bottomBlankHeight)
-      // console.log('slideUpHeight', slideUpHeight)
-      // console.log('slideDownHeight', slideDownHeight)
-
-      // const topBlankMarginTop = slideUpHeight < rowHeight ? slideUpHeight : 0
-      let isValid = slideUpHeight >= rowHeight
-      isValid = isValid || slideDownHeight >= rowHeight
-      isValid = isValid || startIndex === 0
-      if (isValid) {
-        startIndex = startIndex - 5
-        visibleRowCount = visibleRowCount + 5
-        this.setState({
-          startIndex,
-          visibleRowCount,
-          topBlankHeight,
-          bottomBlankHeight
-        })
-      }
-    } else {
-      this.setRowHeight()
+  handleMouseWheel = e => {
+    const evt = e || window.event
+    const val = evt.wheelDelta || evt.detail
+    if (this.lastWheelDelta === val) {
+      this.lastWheelDelta = val
+      // this.refScroll.removeEventListener('scroll', this.listenEvent)
+      // this.refScroll.addEventListener('scroll', this.listenEvent)
     }
+    console.log('val', val)
   }
 
-  handleScrollEvent2 = () => {
+  handleScrollEvent2 = (e) => {
+    e.preventDefault()
     const { dataSource } = this.props
     const { rowHeight, thresholdCount, maxTotalHeight } = this.state
     const { length } = dataSource || []
     if (rowHeight && length > thresholdCount) {
+      // if (this.checkValidIntervalTime('lastRunTime', 30)) { // 控制100ms内为合理，防止鼠标持续滑动的情况
+        
+      // }
       const visibleHeight = this.refScroll.clientHeight // 显示的高度
       const scrollTop = this.refScroll.scrollTop // 滑动的距离
-      this.handleBlankHeight(length, rowHeight, maxTotalHeight, visibleHeight, scrollTop)
+      this.handleBlankHeight(length, rowHeight, maxTotalHeight, visibleHeight, scrollTop) 
     } else {
       this.setRowHeight()
     }
@@ -140,7 +111,9 @@ class VirtualTable extends Component {
   handleBlankHeight(length, rowHeight, maxTotalHeight, visibleHeight, scrollTop) {
     let oriRowHeight = rowHeight
     let totalHeight = length * rowHeight
+    let isBigData = false
     if (totalHeight > maxTotalHeight) {
+      isBigData = true
       totalHeight = maxTotalHeight
       rowHeight = totalHeight / length
       scrollTop = scrollTop > maxTotalHeight ? maxTotalHeight : scrollTop
@@ -155,6 +128,17 @@ class VirtualTable extends Component {
 
     const slideUpHeight = Math.abs(topBlankHeight - this.state.topBlankHeight)
     const slideDownHeight = Math.abs(bottomBlankHeight - this.state.bottomBlankHeight)
+    
+    if (!this.lastSlideUpHeight) {
+      this.sameSlideHeightCount = 0
+      this.lastSlideUpHeight = slideUpHeight
+    } else if (this.lastSlideUpHeight === slideUpHeight) {
+      this.sameSlideHeightCount++
+    } else {
+      this.lastSlideUpHeight = slideUpHeight
+      this.sameSlideHeightCount = 0
+    }
+    
 
     console.log('===================')
     console.log('oriRowHeight', oriRowHeight)
@@ -181,7 +165,21 @@ class VirtualTable extends Component {
         topBlankHeight,
         bottomBlankHeight
       })
+      if (isBigData && this.sameSlideHeightCount > 3) {
+        this.refScroll.scrollTop = scrollTop
+        this.sameSlideHeightCount = 0
+        console.log('set this.refScroll.scrollTop=', scrollTop)
+      }
     }
+  }
+
+  checkValidIntervalTime (timeKey, interval = 100) {
+    const cur = Date.now()
+    if (!this[timeKey] || cur - this[timeKey] >= interval) {
+      this[timeKey] = cur
+      return true
+    }
+    return false
   }
 
   getValidValue (val, min = 0, max = 40) {
