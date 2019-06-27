@@ -32,7 +32,7 @@ class VirtualTable extends Component {
   componentDidMount () {
     this.refScroll = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body')[0]
 
-    this.listenEvent = throttle(this.handleScrollEvent2, 50)
+    this.listenEvent = throttle(this.handleScrollEvent, 50)
 
     if (this.refScroll) {
       this.refScroll.addEventListener('scroll', this.listenEvent)
@@ -41,6 +41,9 @@ class VirtualTable extends Component {
 
     this.createTopFillNode()
     this.createBottomFillNode()
+    // 初始化设置滚动条
+    this.setRowHeight()
+    this.handleScrollEvent()
   }
 
   componentWillUnmount () {
@@ -86,15 +89,11 @@ class VirtualTable extends Component {
     console.log('val', val)
   }
 
-  handleScrollEvent2 = (e) => {
-    e.preventDefault()
+  handleScrollEvent = () => {
     const { dataSource } = this.props
     const { rowHeight, thresholdCount, maxTotalHeight } = this.state
     const { length } = dataSource || []
     if (rowHeight && length > thresholdCount) {
-      // if (this.checkValidIntervalTime('lastRunTime', 30)) { // 控制100ms内为合理，防止鼠标持续滑动的情况
-        
-      // }
       const visibleHeight = this.refScroll.clientHeight // 显示的高度
       const scrollTop = this.refScroll.scrollTop // 滑动的距离
       this.handleBlankHeight(length, rowHeight, maxTotalHeight, visibleHeight, scrollTop) 
@@ -139,19 +138,18 @@ class VirtualTable extends Component {
       this.sameSlideHeightCount = 0
     }
     
-
-    console.log('===================')
-    console.log('oriRowHeight', oriRowHeight)
-    console.log('rowHeight', rowHeight)
-    console.log('totalHeight', totalHeight)
-    console.log('visibleHeight', visibleHeight)
-    console.log('scrollTop', scrollTop)
-    console.log('topBlankHeight', topBlankHeight)
-    console.log('bottomBlankHeight', bottomBlankHeight)
-    console.log('startIndex', startIndex)
-    console.log('visibleRowCount', visibleRowCount)
-    console.log('slideUpHeight', slideUpHeight)
-    console.log('slideDownHeight', slideDownHeight)
+    // console.log('===================')
+    // console.log('oriRowHeight', oriRowHeight)
+    // console.log('rowHeight', rowHeight)
+    // console.log('totalHeight', totalHeight)
+    // console.log('visibleHeight', visibleHeight)
+    // console.log('scrollTop', scrollTop)
+    // console.log('topBlankHeight', topBlankHeight)
+    // console.log('bottomBlankHeight', bottomBlankHeight)
+    // console.log('startIndex', startIndex)
+    // console.log('visibleRowCount', visibleRowCount)
+    // console.log('slideUpHeight', slideUpHeight)
+    // console.log('slideDownHeight', slideDownHeight)
 
     let isValid = slideUpHeight >= rowHeight
     isValid = isValid || slideDownHeight >= rowHeight
@@ -165,10 +163,10 @@ class VirtualTable extends Component {
         topBlankHeight,
         bottomBlankHeight
       })
-      if (isBigData && this.sameSlideHeightCount > 3) {
+      if (isBigData && this.sameSlideHeightCount >= 1) { // 防止大数据持续滚动期间出现空白的问题
         this.refScroll.scrollTop = scrollTop
         this.sameSlideHeightCount = 0
-        console.log('set this.refScroll.scrollTop=', scrollTop)
+        // console.log('set this.refScroll.scrollTop=', scrollTop)
       }
     }
   }
@@ -201,7 +199,6 @@ class VirtualTable extends Component {
       endIn = length > thresholdCount ? thresholdCount : length
     }
     endIn = this.getValidValue(endIn, startIndex, length)
-    // console.log('this.state.rowHeight', rowHeight)
     const data = (dataSource || []).slice(startIn, endIn)
 
     return (

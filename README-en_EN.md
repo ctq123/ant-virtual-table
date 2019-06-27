@@ -1,8 +1,8 @@
 # ant-virtual-table
 
-[English](./README.md) | 简体中文
+English | [简体中文](./README.md) 
 
-这是一个ant的虚拟表格，用于解决大数据渲染时页面卡顿的问题，本组件是对ant.desigin中Table组件进行一层封装，属性完全与原组件Table保持一致 [AntDesign Table](https://ant.design/components/table-cn/)。注意，该组件默认阀值为40条数据，初始化时也只会先渲染40条数据，只有数据量大于40条才会对其进行虚拟渲染处理；否则，不会对表单数据进行虚拟渲染处理，会全部渲染出来（因为数据量<=40根本不会存在渲染卡顿的问题），例子中处理渲染10万条数据，页面也非常流畅。
+This is an ant.design virtual table, which is used to solve the problem of page jamming during big data rendering. This component encapsulates the Table component in ant.desigin and its properties are completely consistent with the original component Table [AntDesign Table](https://ant.design/components/table-cn/). Note that the default threshold of the component is 40 data. Only 40 data will be rendered first during initialization. Only when the data volume is greater than 40 will it be virtual rendered; otherwise, the form data will not be virtual rendered. It will all be rendered (because the amount of data <=40 does not have the problem of rendering the card at all), the example handles rendering 10 million pieces of data, and the page is very smooth.
 
 ## React ant-virtual-table
 [![Build Status](https://travis-ci.org/ctq123/ant-virtual-table.svg?branch=master&foo=bar)](https://travis-ci.org/ctq123/ant-virtual-table)
@@ -12,8 +12,8 @@
 npm install ant-virtual-table --save-dev
 # Usage
 
-## 例子
-![image](https://github.com/ctq123/ant-virtual-table/blob/master/examples/gif/example1.gif)
+## demo
+![image](https://github.com/ctq123/ant-virtual-table/blob/master/example1.gif)
 ```
 import React, { Component, Fragment } from 'react'
 import { VirtualTable } from 'ant-virtual-table'
@@ -89,7 +89,4 @@ class App extends Component {
 
 # Prop Types
 
-属性与antd的Table保持一致，暂时没有自身独特的属性
-<!-- 属性 | 描述 | 类型 | 默认值 | 是否必填
----|---|---|---|--
-dataSource | 数据源 | array |  | 否 -->
+The attribute is consistent with the ant.design Table, and there are no unique attributes for the time being.
