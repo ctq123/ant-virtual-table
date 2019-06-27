@@ -58,66 +58,26 @@ var VirtualTable = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (VirtualTable.__proto__ || Object.getPrototypeOf(VirtualTable)).call(this, props));
 
+    _this.handleMouseWheel = function (e) {
+      var evt = e || window.event;
+      var val = evt.wheelDelta || evt.detail;
+      if (_this.lastWheelDelta === val) {
+        _this.lastWheelDelta = val;
+        // this.refScroll.removeEventListener('scroll', this.listenEvent)
+        // this.refScroll.addEventListener('scroll', this.listenEvent)
+      }
+      console.log('val', val);
+    };
+
     _this.handleScrollEvent = function () {
       var dataSource = _this.props.dataSource;
       var _this$state = _this.state,
           rowHeight = _this$state.rowHeight,
-          thresholdCount = _this$state.thresholdCount;
+          thresholdCount = _this$state.thresholdCount,
+          maxTotalHeight = _this$state.maxTotalHeight;
 
       var _ref2 = dataSource || [],
           length = _ref2.length;
-
-      if (rowHeight && length > thresholdCount) {
-        var totalHeight = rowHeight * length;
-        var visibleHeight = _this.refScroll.clientHeight; // 显示的高度
-        var scrollTop = _this.refScroll.scrollTop; // 滑动的距离
-        var topBlankHeight = scrollTop;
-        var bottomBlankHeight = totalHeight - visibleHeight - topBlankHeight;
-        bottomBlankHeight = bottomBlankHeight > 0 ? bottomBlankHeight : 0;
-        var startIndex = Math.floor(scrollTop / rowHeight);
-        var visibleRowCount = Math.ceil(visibleHeight / rowHeight);
-        // console.log('===================')
-        // console.log('rowHeight', rowHeight)
-        // console.log('totalHeight', totalHeight)
-        // console.log('visibleHeight', visibleHeight)
-        // console.log('scrollTop', scrollTop)
-        // console.log('topBlankHeight', topBlankHeight)
-        // console.log('bottomBlankHeight', bottomBlankHeight)
-        // console.log('startIndex', startIndex)
-        // console.log('visibleRowCount', visibleRowCount)
-        var slideUpHeight = Math.abs(topBlankHeight - _this.state.topBlankHeight);
-        var slideDownHeight = Math.abs(bottomBlankHeight - _this.state.bottomBlankHeight);
-        // console.log('slideUpHeight', slideUpHeight)
-        // console.log('slideDownHeight', slideDownHeight)
-
-        // const topBlankMarginTop = slideUpHeight < rowHeight ? slideUpHeight : 0
-        var isValid = slideUpHeight >= rowHeight;
-        isValid = isValid || slideDownHeight >= rowHeight;
-        isValid = isValid || startIndex === 0;
-        if (isValid) {
-          startIndex = startIndex - 5;
-          visibleRowCount = visibleRowCount + 5;
-          _this.setState({
-            startIndex: startIndex,
-            visibleRowCount: visibleRowCount,
-            topBlankHeight: topBlankHeight,
-            bottomBlankHeight: bottomBlankHeight
-          });
-        }
-      } else {
-        _this.setRowHeight();
-      }
-    };
-
-    _this.handleScrollEvent2 = function () {
-      var dataSource = _this.props.dataSource;
-      var _this$state2 = _this.state,
-          rowHeight = _this$state2.rowHeight,
-          thresholdCount = _this$state2.thresholdCount,
-          maxTotalHeight = _this$state2.maxTotalHeight;
-
-      var _ref3 = dataSource || [],
-          length = _ref3.length;
 
       if (rowHeight && length > thresholdCount) {
         var visibleHeight = _this.refScroll.clientHeight; // 显示的高度
@@ -145,20 +105,25 @@ var VirtualTable = function (_Component) {
     value: function componentDidMount() {
       this.refScroll = _reactDom2.default.findDOMNode(this).getElementsByClassName('ant-table-body')[0];
 
-      this.listenEvent = (0, _lodash2.default)(this.handleScrollEvent2, 50);
+      this.listenEvent = (0, _lodash2.default)(this.handleScrollEvent, 50);
 
       if (this.refScroll) {
         this.refScroll.addEventListener('scroll', this.listenEvent);
+        // this.refScroll.addEventListener('mousewheel', this.handleMouseWheel)
       }
 
       this.createTopFillNode();
       this.createBottomFillNode();
+      // 初始化设置滚动条
+      this.setRowHeight();
+      this.handleScrollEvent();
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       if (this.refScroll) {
         this.refScroll.removeEventListener('scroll', this.listenEvent);
+        // this.refScroll.removeEventListener('mousewheel', this.handleMouseWheel)
       }
     }
   }, {
@@ -198,8 +163,11 @@ var VirtualTable = function (_Component) {
   }, {
     key: 'handleBlankHeight',
     value: function handleBlankHeight(length, rowHeight, maxTotalHeight, visibleHeight, scrollTop) {
+      var oriRowHeight = rowHeight;
       var totalHeight = length * rowHeight;
+      var isBigData = false;
       if (totalHeight > maxTotalHeight) {
+        isBigData = true;
         totalHeight = maxTotalHeight;
         rowHeight = totalHeight / length;
         scrollTop = scrollTop > maxTotalHeight ? maxTotalHeight : scrollTop;
@@ -209,16 +177,27 @@ var VirtualTable = function (_Component) {
           startIndex = void 0,
           visibleRowCount = void 0;
       startIndex = this.getIndexByScrollTop(rowHeight, scrollTop);
-      visibleRowCount = Math.ceil(visibleHeight / rowHeight);
+      visibleRowCount = Math.ceil(visibleHeight / oriRowHeight);
       topBlankHeight = rowHeight * startIndex;
-      topBlankHeight = this.getValidValue(topBlankHeight, 0, totalHeight - visibleHeight);
+      topBlankHeight = this.getValidValue(topBlankHeight, 0, totalHeight);
       bottomBlankHeight = totalHeight - topBlankHeight - visibleHeight;
       bottomBlankHeight = bottomBlankHeight > 0 ? bottomBlankHeight : 0;
 
       var slideUpHeight = Math.abs(topBlankHeight - this.state.topBlankHeight);
       var slideDownHeight = Math.abs(bottomBlankHeight - this.state.bottomBlankHeight);
 
+      if (!this.lastSlideUpHeight) {
+        this.sameSlideHeightCount = 0;
+        this.lastSlideUpHeight = slideUpHeight;
+      } else if (this.lastSlideUpHeight === slideUpHeight) {
+        this.sameSlideHeightCount++;
+      } else {
+        this.lastSlideUpHeight = slideUpHeight;
+        this.sameSlideHeightCount = 0;
+      }
+
       // console.log('===================')
+      // console.log('oriRowHeight', oriRowHeight)
       // console.log('rowHeight', rowHeight)
       // console.log('totalHeight', totalHeight)
       // console.log('visibleHeight', visibleHeight)
@@ -242,7 +221,25 @@ var VirtualTable = function (_Component) {
           topBlankHeight: topBlankHeight,
           bottomBlankHeight: bottomBlankHeight
         });
+        if (isBigData && this.sameSlideHeightCount >= 1) {
+          // 防止大数据持续滚动期间出现空白的问题
+          this.refScroll.scrollTop = scrollTop;
+          this.sameSlideHeightCount = 0;
+          // console.log('set this.refScroll.scrollTop=', scrollTop)
+        }
       }
+    }
+  }, {
+    key: 'checkValidIntervalTime',
+    value: function checkValidIntervalTime(timeKey) {
+      var interval = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
+
+      var cur = Date.now();
+      if (!this[timeKey] || cur - this[timeKey] >= interval) {
+        this[timeKey] = cur;
+        return true;
+      }
+      return false;
     }
   }, {
     key: 'getValidValue',
@@ -272,8 +269,8 @@ var VirtualTable = function (_Component) {
           rowHeight = _state.rowHeight,
           thresholdCount = _state.thresholdCount;
 
-      var _ref4 = dataSource || [],
-          length = _ref4.length;
+      var _ref3 = dataSource || [],
+          length = _ref3.length;
 
       var startIn = this.getValidValue(startIndex, 0, length - visibleRowCount);
       var endIn = startIndex + visibleRowCount;
@@ -282,7 +279,6 @@ var VirtualTable = function (_Component) {
         endIn = length > thresholdCount ? thresholdCount : length;
       }
       endIn = this.getValidValue(endIn, startIndex, length);
-      // console.log('this.state.rowHeight', rowHeight)
       var data = (dataSource || []).slice(startIn, endIn);
 
       return _react2.default.createElement(
