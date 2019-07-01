@@ -206,7 +206,6 @@ class VirtualTable extends Component {
         <VirtualTable.FillNode
           height={topBlankHeight}
           node={this.refTopNode}
-          marginBottom={-rowHeight}
         />
         <Table
           {...rest}
