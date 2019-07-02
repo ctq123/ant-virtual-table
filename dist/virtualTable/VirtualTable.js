@@ -286,8 +286,7 @@ var VirtualTable = function (_Component) {
         null,
         _react2.default.createElement(VirtualTable.FillNode, {
           height: topBlankHeight,
-          node: this.refTopNode,
-          marginBottom: -rowHeight
+          node: this.refTopNode
         }),
         _react2.default.createElement(_antd.Table, _extends({}, rest, {
           dataSource: data

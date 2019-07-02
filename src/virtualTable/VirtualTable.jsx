@@ -46,6 +46,15 @@ class VirtualTable extends Component {
     this.handleScrollEvent()
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { dataSource } = nextProps
+    const { dataSource: tdataSource } = this.props
+    if (dataSource && dataSource.length != tdataSource.length) {
+      this.refScroll.scrollTop = 0
+      this.handleScrollEvent()
+    }
+  }
+
   componentWillUnmount () {
     if (this.refScroll) {
       this.refScroll.removeEventListener('scroll', this.listenEvent)
@@ -93,7 +102,7 @@ class VirtualTable extends Component {
     const { dataSource } = this.props
     const { rowHeight, thresholdCount, maxTotalHeight } = this.state
     const { length } = dataSource || []
-    if (rowHeight && length > thresholdCount) {
+    if (rowHeight && length) {
       const visibleHeight = this.refScroll.clientHeight // 显示的高度
       const scrollTop = this.refScroll.scrollTop // 滑动的距离
       this.handleBlankHeight(length, rowHeight, maxTotalHeight, visibleHeight, scrollTop) 
@@ -116,6 +125,9 @@ class VirtualTable extends Component {
       totalHeight = maxTotalHeight
       rowHeight = totalHeight / length
       scrollTop = scrollTop > maxTotalHeight ? maxTotalHeight : scrollTop
+    }
+    if (length >= 10000) {
+      isBigData = true
     }
     let topBlankHeight, bottomBlankHeight, startIndex, visibleRowCount
     startIndex = this.getIndexByScrollTop(rowHeight, scrollTop)
