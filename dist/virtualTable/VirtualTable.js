@@ -79,7 +79,7 @@ var VirtualTable = function (_Component) {
       var _ref2 = dataSource || [],
           length = _ref2.length;
 
-      if (rowHeight && length > thresholdCount) {
+      if (rowHeight && length) {
         var visibleHeight = _this.refScroll.clientHeight; // 显示的高度
         var scrollTop = _this.refScroll.scrollTop; // 滑动的距离
         _this.handleBlankHeight(length, rowHeight, maxTotalHeight, visibleHeight, scrollTop);
@@ -117,6 +117,17 @@ var VirtualTable = function (_Component) {
       // 初始化设置滚动条
       this.setRowHeight();
       this.handleScrollEvent();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var dataSource = nextProps.dataSource;
+      var tdataSource = this.props.dataSource;
+
+      if (dataSource && dataSource.length != tdataSource.length) {
+        this.refScroll.scrollTop = 0;
+        this.handleScrollEvent();
+      }
     }
   }, {
     key: 'componentWillUnmount',
@@ -171,6 +182,9 @@ var VirtualTable = function (_Component) {
         totalHeight = maxTotalHeight;
         rowHeight = totalHeight / length;
         scrollTop = scrollTop > maxTotalHeight ? maxTotalHeight : scrollTop;
+      }
+      if (length >= 10000) {
+        isBigData = true;
       }
       var topBlankHeight = void 0,
           bottomBlankHeight = void 0,

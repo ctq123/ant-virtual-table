@@ -31,6 +31,7 @@ class VirtualTable extends Component {
 
   componentDidMount () {
     this.refScroll = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body')[0]
+    // this.refInnerScroll = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body-inner')[0]
 
     this.listenEvent = throttle(this.handleScrollEvent, 50)
 
@@ -205,13 +206,16 @@ class VirtualTable extends Component {
     const { dataSource, ...rest } = this.props
     const { topBlankHeight, bottomBlankHeight, startIndex, visibleRowCount, rowHeight, thresholdCount } = this.state
     const { length } = dataSource || []
-    let startIn = this.getValidValue(startIndex, 0, length - visibleRowCount)
+    let startCount = length - visibleRowCount
+    startCount = startCount > 0 ? startCount : length
+    let startIn = this.getValidValue(startIndex, 0, startCount)
     let endIn = startIndex + visibleRowCount
     if (!endIn) { // 初始化渲染数据
       endIn = length > thresholdCount ? thresholdCount : length
     }
     endIn = this.getValidValue(endIn, startIndex, length)
     const data = (dataSource || []).slice(startIn, endIn)
+    // console.log(startIn, endIn, visibleRowCount, length)
 
     return (
       <Fragment>
