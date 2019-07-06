@@ -40,7 +40,7 @@ function generateData () {
   const res = []
   const names = ['Tom', 'Marry', 'Jack', 'Lorry', 'Tanken', 'Salla']
   const sexs = ['male', 'female']
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 10000000; i++) {
     let obj = {
       id: i,
       name: names[i % names.length] + i,
@@ -85,7 +85,7 @@ class App extends Component {
     const { list = [] } = this.state
     return (
       <Fragment>
-        <div style={{ 'height': 400, 'width': '100%' }} />
+        <div style={{ 'height': 350, 'width': '100%' }} />
         <VirtualTable
           columns={columns}
           dataSource={list}

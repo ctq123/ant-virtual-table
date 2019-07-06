@@ -58,26 +58,16 @@ var VirtualTable = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (VirtualTable.__proto__ || Object.getPrototypeOf(VirtualTable)).call(this, props));
 
-    _this.handleMouseWheel = function (e) {
-      var evt = e || window.event;
-      var val = evt.wheelDelta || evt.detail;
-      if (_this.lastWheelDelta === val) {
-        _this.lastWheelDelta = val;
-        // this.refScroll.removeEventListener('scroll', this.listenEvent)
-        // this.refScroll.addEventListener('scroll', this.listenEvent)
-      }
-      console.log('val', val);
+    _this.handleScrollEvent = function (e) {
+      var dataSource = _this.props.dataSource;
+
+      _this.handleScroll((dataSource || []).length);
     };
 
-    _this.handleScrollEvent = function () {
-      var dataSource = _this.props.dataSource;
+    _this.handleScroll = function (length) {
       var _this$state = _this.state,
           rowHeight = _this$state.rowHeight,
-          thresholdCount = _this$state.thresholdCount,
           maxTotalHeight = _this$state.maxTotalHeight;
-
-      var _ref2 = dataSource || [],
-          length = _ref2.length;
 
       if (rowHeight && length) {
         var visibleHeight = _this.refScroll.clientHeight; // 显示的高度
@@ -104,12 +94,12 @@ var VirtualTable = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.refScroll = _reactDom2.default.findDOMNode(this).getElementsByClassName('ant-table-body')[0];
+      // this.refInnerScroll = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body-inner')[0]
 
       this.listenEvent = (0, _lodash2.default)(this.handleScrollEvent, 50);
 
       if (this.refScroll) {
         this.refScroll.addEventListener('scroll', this.listenEvent);
-        // this.refScroll.addEventListener('mousewheel', this.handleMouseWheel)
       }
 
       this.createTopFillNode();
@@ -126,7 +116,7 @@ var VirtualTable = function (_Component) {
 
       if (dataSource && dataSource.length != tdataSource.length) {
         this.refScroll.scrollTop = 0;
-        this.handleScrollEvent();
+        this.handleScroll(dataSource.length);
       }
     }
   }, {
@@ -134,7 +124,6 @@ var VirtualTable = function (_Component) {
     value: function componentWillUnmount() {
       if (this.refScroll) {
         this.refScroll.removeEventListener('scroll', this.listenEvent);
-        // this.refScroll.removeEventListener('mousewheel', this.handleMouseWheel)
       }
     }
   }, {
@@ -283,10 +272,12 @@ var VirtualTable = function (_Component) {
           rowHeight = _state.rowHeight,
           thresholdCount = _state.thresholdCount;
 
-      var _ref3 = dataSource || [],
-          length = _ref3.length;
+      var _ref2 = dataSource || [],
+          length = _ref2.length;
 
-      var startIn = this.getValidValue(startIndex, 0, length - visibleRowCount);
+      var startCount = length - visibleRowCount;
+      startCount = startCount > 0 ? startCount : length;
+      var startIn = this.getValidValue(startIndex, 0, startCount);
       var endIn = startIndex + visibleRowCount;
       if (!endIn) {
         // 初始化渲染数据
@@ -294,6 +285,7 @@ var VirtualTable = function (_Component) {
       }
       endIn = this.getValidValue(endIn, startIndex, length);
       var data = (dataSource || []).slice(startIn, endIn);
+      // console.log(startIn, endIn, visibleRowCount, length)
 
       return _react2.default.createElement(
         _react.Fragment,

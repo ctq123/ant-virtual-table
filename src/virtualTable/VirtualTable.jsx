@@ -37,7 +37,6 @@ class VirtualTable extends Component {
 
     if (this.refScroll) {
       this.refScroll.addEventListener('scroll', this.listenEvent)
-      // this.refScroll.addEventListener('mousewheel', this.handleMouseWheel)
     }
 
     this.createTopFillNode()
@@ -52,14 +51,13 @@ class VirtualTable extends Component {
     const { dataSource: tdataSource } = this.props
     if (dataSource && dataSource.length != tdataSource.length) {
       this.refScroll.scrollTop = 0
-      this.handleScrollEvent()
+      this.handleScroll(dataSource.length)
     }
   }
 
   componentWillUnmount () {
     if (this.refScroll) {
       this.refScroll.removeEventListener('scroll', this.listenEvent)
-      // this.refScroll.removeEventListener('mousewheel', this.handleMouseWheel)
     }
   }
 
@@ -88,21 +86,13 @@ class VirtualTable extends Component {
     }
   }
 
-  handleMouseWheel = e => {
-    const evt = e || window.event
-    const val = evt.wheelDelta || evt.detail
-    if (this.lastWheelDelta === val) {
-      this.lastWheelDelta = val
-      // this.refScroll.removeEventListener('scroll', this.listenEvent)
-      // this.refScroll.addEventListener('scroll', this.listenEvent)
-    }
-    console.log('val', val)
-  }
-
-  handleScrollEvent = () => {
+  handleScrollEvent = (e) => {
     const { dataSource } = this.props
-    const { rowHeight, thresholdCount, maxTotalHeight } = this.state
-    const { length } = dataSource || []
+    this.handleScroll((dataSource || []).length)
+  }
+  
+  handleScroll = (length) => {
+    const { rowHeight, maxTotalHeight } = this.state
     if (rowHeight && length) {
       const visibleHeight = this.refScroll.clientHeight // 显示的高度
       const scrollTop = this.refScroll.scrollTop // 滑动的距离
