@@ -16,11 +16,11 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _antd = require('antd');
+var _lodash = require('lodash');
 
-var _lodash = require('lodash.throttle');
+var _BaseTable = require('./BaseTable');
 
-var _lodash2 = _interopRequireDefault(_lodash);
+var _BaseTable2 = _interopRequireDefault(_BaseTable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32,8 +32,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var VirtualTable = function (_Component) {
-  _inherits(VirtualTable, _Component);
+var VirtualTable = function (_PureComponent) {
+  _inherits(VirtualTable, _PureComponent);
 
   _createClass(VirtualTable, null, [{
     key: 'FillNode',
@@ -96,7 +96,7 @@ var VirtualTable = function (_Component) {
       this.refScroll = _reactDom2.default.findDOMNode(this).getElementsByClassName('ant-table-body')[0];
       // this.refInnerScroll = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body-inner')[0]
 
-      this.listenEvent = (0, _lodash2.default)(this.handleScrollEvent, 50);
+      this.listenEvent = (0, _lodash.throttle)(this.handleScrollEvent, 50);
 
       if (this.refScroll) {
         this.refScroll.addEventListener('scroll', this.listenEvent);
@@ -109,9 +109,9 @@ var VirtualTable = function (_Component) {
       this.handleScrollEvent();
     }
   }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      var dataSource = nextProps.dataSource;
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      var dataSource = prevProps.dataSource;
       var tdataSource = this.props.dataSource;
 
       if (dataSource && dataSource.length != tdataSource.length) {
@@ -284,7 +284,7 @@ var VirtualTable = function (_Component) {
         endIn = length > thresholdCount ? thresholdCount : length;
       }
       endIn = this.getValidValue(endIn, startIndex, length);
-      var data = (dataSource || []).slice(startIn, endIn);
+      var renderSource = (dataSource || []).slice(startIn, endIn);
       // console.log(startIn, endIn, visibleRowCount, length)
 
       return _react2.default.createElement(
@@ -294,8 +294,9 @@ var VirtualTable = function (_Component) {
           height: topBlankHeight,
           node: this.refTopNode
         }),
-        _react2.default.createElement(_antd.Table, _extends({}, rest, {
-          dataSource: data
+        _react2.default.createElement(_BaseTable2.default, _extends({}, rest, {
+          dataSource: dataSource,
+          renderSource: renderSource
         })),
         _react2.default.createElement(VirtualTable.FillNode, {
           height: bottomBlankHeight,
@@ -306,6 +307,6 @@ var VirtualTable = function (_Component) {
   }]);
 
   return VirtualTable;
-}(_react.Component);
+}(_react.PureComponent);
 
 exports.default = VirtualTable;
