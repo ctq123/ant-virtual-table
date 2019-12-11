@@ -91,7 +91,7 @@ class App extends Component {
           columns={columns}
           dataSource={list}
           rowKey='id'
-          rowSelection={false}
+          pagination={false}
           scroll={{ y: 400 }}
           bordered
         />

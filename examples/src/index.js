@@ -53,7 +53,7 @@ function generateData (count) {
   return res
 }
 
-const dataSource = generateData(20)
+const dataSource = generateData(1000000)
 
 class App extends Component {
   constructor (props) {
@@ -91,7 +91,7 @@ class App extends Component {
           columns={columns}
           dataSource={list}
           rowKey='id'
-          rowSelection={false}
+          pagination={false}
           scroll={{ y: 400 }}
           bordered
         />
