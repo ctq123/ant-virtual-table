@@ -1,9 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import ReactDOM from 'react-dom'
-import { Table } from 'antd'
-import throttle from 'lodash.throttle'
+import { throttle } from 'lodash'
+import BaseTable from './BaseTable'
 
-class VirtualTable extends Component {
+class VirtualTable extends PureComponent {
   static FillNode ({ height, node, marginTop, marginBottom }) {
     if (node) {
       marginTop = marginTop || 0
@@ -46,8 +46,8 @@ class VirtualTable extends Component {
     this.handleScrollEvent()
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { dataSource } = nextProps
+  componentDidUpdate(prevProps) {
+    const { dataSource } = prevProps
     const { dataSource: tdataSource } = this.props
     if (dataSource && dataSource.length != tdataSource.length) {
       this.refScroll.scrollTop = 0
@@ -204,7 +204,7 @@ class VirtualTable extends Component {
       endIn = length > thresholdCount ? thresholdCount : length
     }
     endIn = this.getValidValue(endIn, startIndex, length)
-    const data = (dataSource || []).slice(startIn, endIn)
+    const renderSource = (dataSource || []).slice(startIn, endIn)
     // console.log(startIn, endIn, visibleRowCount, length)
 
     return (
@@ -213,9 +213,10 @@ class VirtualTable extends Component {
           height={topBlankHeight}
           node={this.refTopNode}
         />
-        <Table
+        <BaseTable
           {...rest}
-          dataSource={data}
+          dataSource={dataSource}
+          renderSource = {renderSource}
         />
         <VirtualTable.FillNode
           height={bottomBlankHeight}

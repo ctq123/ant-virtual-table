@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { render } from 'react-dom'
 import { VirtualTable } from '../../src'
-import { Pagination, Table } from 'antd'
+import { Pagination } from 'antd'
 import 'antd/dist/antd.css'
 
 const columns = [
@@ -36,11 +36,11 @@ const columns = [
   }
 ]
 
-function generateData () {
+function generateData (count) {
   const res = []
   const names = ['Tom', 'Marry', 'Jack', 'Lorry', 'Tanken', 'Salla']
   const sexs = ['male', 'female']
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < count; i++) {
     let obj = {
       id: i,
       name: names[i % names.length] + i,
@@ -53,7 +53,7 @@ function generateData () {
   return res
 }
 
-const dataSource = generateData()
+const dataSource = generateData(20)
 
 class App extends Component {
   constructor (props) {
@@ -81,8 +81,26 @@ class App extends Component {
       objectsPerPage
     })
   }
+
+  onSelectRows = (selectedRowKeys, selectedRows) => {
+    console.log(`onSelectRows selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+  }
+
+  onSelect = (record, selected, selectedRows, nativeEvent) => {
+    console.log(`onSelect record: ${record} selected: ${selected}`, 'selectedRows: ', selectedRows)
+  }
+
+  onSelectAll = (selected, selectedRows) => {
+    console.log(`onSelectAll selected: ${selected}`, 'selectedRows: ', selectedRows)
+  }
+
   render () {
     const { list = [] } = this.state
+    const rowSelection = {
+      onChange: this.onSelectRows,
+      onSelect: this.onSelect,
+      onSelectAll: this.onSelectAll,
+    }
     return (
       <Fragment>
         <div style={{ 'height': 350, 'width': '100%' }} />
@@ -92,6 +110,7 @@ class App extends Component {
           rowKey='id'
           pagination={false}
           scroll={{ y: 400 }}
+          rowSelection={rowSelection}
           bordered
         />
         <Pagination
@@ -105,26 +124,6 @@ class App extends Component {
           onChange={this.onPageChange.bind(this)}
           showTotal={() => `共 ${list.length} 条`}
         />
-
-        {/* <Table
-          columns={columns}
-          dataSource={list}
-          rowKey='id'
-          pagination={false}
-          scroll={{ y: 400 }}
-          bordered
-        />
-        <Pagination
-          size='small'
-          total={list.length}
-          current={this.state.pageNumber}
-          pageSize={this.state.objectsPerPage}
-          showSizeChanger
-          pageSizeOptions={['10', '20', '50', '1000']}
-          onShowSizeChange={this.onShowSizeChange.bind(this)}
-          onChange={this.onPageChange.bind(this)}
-          showTotal={() => `共 ${list.length} 条`}
-        /> */}
       </Fragment>
     )
   }
