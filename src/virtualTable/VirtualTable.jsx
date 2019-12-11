@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import ReactDOM from 'react-dom'
-import { throttle } from 'lodash'
+import { throttle, debounce } from 'lodash'
 import BaseTable from './BaseTable'
 
 class VirtualTable extends PureComponent {
@@ -30,8 +30,12 @@ class VirtualTable extends PureComponent {
   }
 
   componentDidMount () {
+    // 普通table布局
     this.refScroll = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body')[0]
-    // this.refInnerScroll = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body-inner')[0]
+    // 固定列的布局
+    const fixedEles = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body-inner')
+    this.refFixedLeftScroll = fixedEles && fixedEles.length ? fixedEles[0] : null
+    this.refFixedRightScroll = fixedEles && fixedEles.length > 1 ? fixedEles[1] : null
 
     this.listenEvent = throttle(this.handleScrollEvent, 50)
 
@@ -67,6 +71,16 @@ class VirtualTable extends PureComponent {
       this.refScroll.insertBefore(ele, this.refScroll.firstChild)
       this.refTopNode = ele
     }
+    if (this.refFixedLeftScroll) {
+      const ele = document.createElement('div')
+      this.refFixedLeftScroll.insertBefore(ele, this.refFixedLeftScroll.firstChild)
+      this.refFixedLeftTopNode = ele
+    }
+    if (this.refFixedRightScroll) {
+      const ele = document.createElement('div')
+      this.refFixedRightScroll.insertBefore(ele, this.refFixedRightScroll.firstChild)
+      this.refFixedRightTopNode = ele
+    }
   }
 
   createBottomFillNode () {
@@ -75,10 +89,21 @@ class VirtualTable extends PureComponent {
       this.refScroll.appendChild(ele)
       this.refBottomNode = ele
     }
+    if (this.refFixedLeftScroll) {
+      const ele = document.createElement('div')
+      this.refFixedLeftScroll.appendChild(ele)
+      this.refFixedLeftBottomNode = ele
+    }
+    if (this.refFixedRightScroll) {
+      const ele = document.createElement('div')
+      this.refFixedRightScroll.appendChild(ele)
+      this.refFixedRightBottomNode = ele
+    }
   }
 
   setRowHeight () {
     this.refTable = this.refScroll.getElementsByTagName('table')[0]
+    // this.refFixedLeftTable = this.refFixedLeftScroll.getElementsByTagName('table')[0]
     if (this.refTable) {
       const tr = this.refTable.getElementsByTagName('tr')[0]
       const rowHeight = (tr && tr.clientHeight) || 0
@@ -154,6 +179,7 @@ class VirtualTable extends PureComponent {
     // console.log('slideUpHeight', slideUpHeight)
     // console.log('slideDownHeight', slideDownHeight)
 
+
     let isValid = slideUpHeight >= rowHeight
     isValid = isValid || slideDownHeight >= rowHeight
     isValid = isValid || startIndex === 0
@@ -166,6 +192,7 @@ class VirtualTable extends PureComponent {
         topBlankHeight,
         bottomBlankHeight
       })
+      
       if (isBigData && this.sameSlideHeightCount >= 1) { // 防止大数据持续滚动期间出现空白的问题
         this.refScroll.scrollTop = scrollTop
         this.sameSlideHeightCount = 0
@@ -205,7 +232,7 @@ class VirtualTable extends PureComponent {
     }
     endIn = this.getValidValue(endIn, startIndex, length)
     const renderSource = (dataSource || []).slice(startIn, endIn)
-    // console.log(startIn, endIn, visibleRowCount, length)
+    console.log(startIn, endIn, visibleRowCount, length)
 
     return (
       <Fragment>
@@ -222,6 +249,28 @@ class VirtualTable extends PureComponent {
           height={bottomBlankHeight}
           node={this.refBottomNode}
         />
+
+        {
+          /**fixed 针对固定列的*/
+          <Fragment>
+            <VirtualTable.FillNode
+              height={topBlankHeight}
+              node={this.refFixedLeftTopNode}
+            />
+            <VirtualTable.FillNode
+              height={bottomBlankHeight}
+              node={this.refFixedLeftBottomNode}
+            />
+            <VirtualTable.FillNode
+              height={topBlankHeight}
+              node={this.refFixedRightTopNode}
+            />
+            <VirtualTable.FillNode
+              height={bottomBlankHeight}
+              node={this.refFixedRightBottomNode}
+            />
+          </Fragment>
+        }
       </Fragment>
     )
   }

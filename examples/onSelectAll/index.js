@@ -82,8 +82,25 @@ class App extends Component {
     })
   }
 
+  onChange = (selectedRowKeys, selectedRows) => {
+    console.log(`onChange selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+  }
+
+  onSelect = (record, selected, selectedRows, nativeEvent) => {
+    console.log(`onSelect record: ${record} selected: ${selected}`, 'selectedRows: ', selectedRows)
+  }
+
+  onSelectAll = (selected, selectedRows) => {
+    console.log(`onSelectAll selected: ${selected}`, 'selectedRows: ', selectedRows)
+  }
+
   render () {
     const { list = [] } = this.state
+    const rowSelection = {
+      onChange: this.onChange,
+      onSelect: this.onSelect,
+      onSelectAll: this.onSelectAll,
+    }
     return (
       <Fragment>
         <div style={{ 'height': 350, 'width': '100%' }} />
@@ -91,8 +108,9 @@ class App extends Component {
           columns={columns}
           dataSource={list}
           rowKey='id'
-          rowSelection={false}
+          pagination={false}
           scroll={{ y: 400 }}
+          rowSelection={rowSelection}
           bordered
         />
         <Pagination

@@ -8,7 +8,7 @@ const columns = [
   {
     title: '序号',
     dataIndex: 'id',
-    // fixed: 'left',
+    fixed: 'left',
     width: 100
   },
   {
@@ -53,7 +53,7 @@ function generateData (count) {
   return res
 }
 
-const dataSource = generateData(20)
+const dataSource = generateData(100)
 
 class App extends Component {
   constructor (props) {
