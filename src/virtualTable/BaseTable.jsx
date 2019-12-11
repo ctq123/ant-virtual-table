@@ -18,15 +18,6 @@ class BaseTable extends PureComponent {
         // 原方法保存下来
         this.onChangeCB = onChange
       }
-      if (rowSelection['selectedRowKeys'] !== undefined) {
-        // 警告selectedRowKeys已失效
-        if (process.env.NODE_ENV !== 'production') {
-          warning(
-            false,
-            'you should not use `selectedRowKeys` on rowSelection, this field has been rewritten. '
-          )
-        }
-      }
     }
     this.state = {
       selectedRowKeys: [],
@@ -34,8 +25,7 @@ class BaseTable extends PureComponent {
     }
   }
 
-  // 处理全选函数
-  reOnSelectAll = (selected, selectedRows, changeRows) => {
+  reOnSelectAll = (selected, selectedRows, changeRows) => {// 处理全选函数
     const { dataSource, rowKey } = this.props
     if (selected) {
       const selectedRowKeys = dataSource.map(item => item[rowKey])
@@ -53,8 +43,7 @@ class BaseTable extends PureComponent {
     }
   }
 
-  // 处理onChange函数
-  reOnChange = (selectedRowKeys, selectedRows) => {
+  reOnChange = (selectedRowKeys, selectedRows) => {// 处理onChange函数
     if (selectedRowKeys) {
       this.setState({
         selectedRowKeys
@@ -65,10 +54,14 @@ class BaseTable extends PureComponent {
   }
 
   render() {
-    const { renderSource, dataSource, ...rest } = this.props
+    const { renderSource, dataSource, rowSelection, ...rest } = this.props
     const { selectedRowKeys, newRowSelection } = this.state
     
-    newRowSelection && (newRowSelection.selectedRowKeys = selectedRowKeys)
+    if (newRowSelection) {
+      /**需要兼容用户传递进来的selectedRowKeys，
+       * 用户selectedRowKeys优先级高于内部selectedRowKeys */
+      newRowSelection.selectedRowKeys = rowSelection['selectedRowKeys'] || selectedRowKeys
+    }
 
     return (
       <Table

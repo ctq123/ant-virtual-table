@@ -82,8 +82,8 @@ class App extends Component {
     })
   }
 
-  onSelectRows = (selectedRowKeys, selectedRows) => {
-    console.log(`onSelectRows selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+  onChange = (selectedRowKeys, selectedRows) => {
+    console.log(`onChange selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
   }
 
   onSelect = (record, selected, selectedRows, nativeEvent) => {
@@ -97,7 +97,7 @@ class App extends Component {
   render () {
     const { list = [] } = this.state
     const rowSelection = {
-      onChange: this.onSelectRows,
+      onChange: this.onChange,
       onSelect: this.onSelect,
       onSelectAll: this.onSelectAll,
     }
