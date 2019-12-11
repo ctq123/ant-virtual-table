@@ -93,8 +93,12 @@ var VirtualTable = function (_PureComponent) {
   _createClass(VirtualTable, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      // 普通table布局
       this.refScroll = _reactDom2.default.findDOMNode(this).getElementsByClassName('ant-table-body')[0];
-      // this.refInnerScroll = ReactDOM.findDOMNode(this).getElementsByClassName('ant-table-body-inner')[0]
+      // 固定列的布局
+      var fixedEles = _reactDom2.default.findDOMNode(this).getElementsByClassName('ant-table-body-inner');
+      this.refFixedLeftScroll = fixedEles && fixedEles.length ? fixedEles[0] : null;
+      this.refFixedRightScroll = fixedEles && fixedEles.length > 1 ? fixedEles[1] : null;
 
       this.listenEvent = (0, _lodash.throttle)(this.handleScrollEvent, 50);
 
@@ -134,6 +138,16 @@ var VirtualTable = function (_PureComponent) {
         this.refScroll.insertBefore(ele, this.refScroll.firstChild);
         this.refTopNode = ele;
       }
+      if (this.refFixedLeftScroll) {
+        var _ele = document.createElement('div');
+        this.refFixedLeftScroll.insertBefore(_ele, this.refFixedLeftScroll.firstChild);
+        this.refFixedLeftTopNode = _ele;
+      }
+      if (this.refFixedRightScroll) {
+        var _ele2 = document.createElement('div');
+        this.refFixedRightScroll.insertBefore(_ele2, this.refFixedRightScroll.firstChild);
+        this.refFixedRightTopNode = _ele2;
+      }
     }
   }, {
     key: 'createBottomFillNode',
@@ -143,11 +157,22 @@ var VirtualTable = function (_PureComponent) {
         this.refScroll.appendChild(ele);
         this.refBottomNode = ele;
       }
+      if (this.refFixedLeftScroll) {
+        var _ele3 = document.createElement('div');
+        this.refFixedLeftScroll.appendChild(_ele3);
+        this.refFixedLeftBottomNode = _ele3;
+      }
+      if (this.refFixedRightScroll) {
+        var _ele4 = document.createElement('div');
+        this.refFixedRightScroll.appendChild(_ele4);
+        this.refFixedRightBottomNode = _ele4;
+      }
     }
   }, {
     key: 'setRowHeight',
     value: function setRowHeight() {
       this.refTable = this.refScroll.getElementsByTagName('table')[0];
+      // this.refFixedLeftTable = this.refFixedLeftScroll.getElementsByTagName('table')[0]
       if (this.refTable) {
         var tr = this.refTable.getElementsByTagName('tr')[0];
         var rowHeight = tr && tr.clientHeight || 0;
@@ -212,6 +237,7 @@ var VirtualTable = function (_PureComponent) {
       // console.log('slideUpHeight', slideUpHeight)
       // console.log('slideDownHeight', slideDownHeight)
 
+
       var isValid = slideUpHeight >= rowHeight;
       isValid = isValid || slideDownHeight >= rowHeight;
       isValid = isValid || startIndex === 0;
@@ -224,6 +250,7 @@ var VirtualTable = function (_PureComponent) {
           topBlankHeight: topBlankHeight,
           bottomBlankHeight: bottomBlankHeight
         });
+
         if (isBigData && this.sameSlideHeightCount >= 1) {
           // 防止大数据持续滚动期间出现空白的问题
           this.refScroll.scrollTop = scrollTop;
@@ -285,7 +312,7 @@ var VirtualTable = function (_PureComponent) {
       }
       endIn = this.getValidValue(endIn, startIndex, length);
       var renderSource = (dataSource || []).slice(startIn, endIn);
-      // console.log(startIn, endIn, visibleRowCount, length)
+      console.log(startIn, endIn, visibleRowCount, length);
 
       return _react2.default.createElement(
         _react.Fragment,
@@ -301,7 +328,29 @@ var VirtualTable = function (_PureComponent) {
         _react2.default.createElement(VirtualTable.FillNode, {
           height: bottomBlankHeight,
           node: this.refBottomNode
-        })
+        }),
+
+        /**fixed 针对固定列的*/
+        _react2.default.createElement(
+          _react.Fragment,
+          null,
+          _react2.default.createElement(VirtualTable.FillNode, {
+            height: topBlankHeight,
+            node: this.refFixedLeftTopNode
+          }),
+          _react2.default.createElement(VirtualTable.FillNode, {
+            height: bottomBlankHeight,
+            node: this.refFixedLeftBottomNode
+          }),
+          _react2.default.createElement(VirtualTable.FillNode, {
+            height: topBlankHeight,
+            node: this.refFixedRightTopNode
+          }),
+          _react2.default.createElement(VirtualTable.FillNode, {
+            height: bottomBlankHeight,
+            node: this.refFixedRightBottomNode
+          })
+        )
       );
     }
   }]);
