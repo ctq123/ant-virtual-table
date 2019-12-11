@@ -68,7 +68,7 @@ class BaseTable extends PureComponent {
     const { renderSource, dataSource, ...rest } = this.props
     const { selectedRowKeys, newRowSelection } = this.state
     
-    newRowSelection.selectedRowKeys = selectedRowKeys
+    newRowSelection && (newRowSelection.selectedRowKeys = selectedRowKeys)
 
     return (
       <Table
