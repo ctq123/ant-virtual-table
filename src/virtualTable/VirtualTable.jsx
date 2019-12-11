@@ -165,20 +165,6 @@ class VirtualTable extends PureComponent {
       this.lastSlideUpHeight = slideUpHeight
       this.sameSlideHeightCount = 0
     }
-    
-    // console.log('===================')
-    // console.log('oriRowHeight', oriRowHeight)
-    // console.log('rowHeight', rowHeight)
-    // console.log('totalHeight', totalHeight)
-    // console.log('visibleHeight', visibleHeight)
-    // console.log('scrollTop', scrollTop)
-    // console.log('topBlankHeight', topBlankHeight)
-    // console.log('bottomBlankHeight', bottomBlankHeight)
-    // console.log('startIndex', startIndex)
-    // console.log('visibleRowCount', visibleRowCount)
-    // console.log('slideUpHeight', slideUpHeight)
-    // console.log('slideDownHeight', slideDownHeight)
-
 
     let isValid = slideUpHeight >= rowHeight
     isValid = isValid || slideDownHeight >= rowHeight
@@ -196,7 +182,6 @@ class VirtualTable extends PureComponent {
       if (isBigData && this.sameSlideHeightCount >= 1) { // 防止大数据持续滚动期间出现空白的问题
         this.refScroll.scrollTop = scrollTop
         this.sameSlideHeightCount = 0
-        // console.log('set this.refScroll.scrollTop=', scrollTop)
       }
     }
   }
@@ -232,7 +217,6 @@ class VirtualTable extends PureComponent {
     }
     endIn = this.getValidValue(endIn, startIndex, length)
     const renderSource = (dataSource || []).slice(startIn, endIn)
-    console.log(startIn, endIn, visibleRowCount, length)
 
     return (
       <Fragment>

@@ -224,20 +224,6 @@ var VirtualTable = function (_PureComponent) {
         this.sameSlideHeightCount = 0;
       }
 
-      // console.log('===================')
-      // console.log('oriRowHeight', oriRowHeight)
-      // console.log('rowHeight', rowHeight)
-      // console.log('totalHeight', totalHeight)
-      // console.log('visibleHeight', visibleHeight)
-      // console.log('scrollTop', scrollTop)
-      // console.log('topBlankHeight', topBlankHeight)
-      // console.log('bottomBlankHeight', bottomBlankHeight)
-      // console.log('startIndex', startIndex)
-      // console.log('visibleRowCount', visibleRowCount)
-      // console.log('slideUpHeight', slideUpHeight)
-      // console.log('slideDownHeight', slideDownHeight)
-
-
       var isValid = slideUpHeight >= rowHeight;
       isValid = isValid || slideDownHeight >= rowHeight;
       isValid = isValid || startIndex === 0;
@@ -255,7 +241,6 @@ var VirtualTable = function (_PureComponent) {
           // 防止大数据持续滚动期间出现空白的问题
           this.refScroll.scrollTop = scrollTop;
           this.sameSlideHeightCount = 0;
-          // console.log('set this.refScroll.scrollTop=', scrollTop)
         }
       }
     }
@@ -312,7 +297,6 @@ var VirtualTable = function (_PureComponent) {
       }
       endIn = this.getValidValue(endIn, startIndex, length);
       var renderSource = (dataSource || []).slice(startIn, endIn);
-      console.log(startIn, endIn, visibleRowCount, length);
 
       return _react2.default.createElement(
         _react.Fragment,

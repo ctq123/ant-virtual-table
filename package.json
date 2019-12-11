@@ -1,6 +1,6 @@
 {
   "name": "ant-virtual-table",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "main": "dist/index.js",
   "directories": {
@@ -32,6 +32,10 @@
     "virtual-table",
     "ant",
     "ant-table",
+    "virtualied",
+    "虚拟渲染",
+    "虚拟表格",
+    "antd",
     "virtual"
   ],
   "author": "tqcheng",
