@@ -186,15 +186,6 @@ class VirtualTable extends PureComponent {
     }
   }
 
-  checkValidIntervalTime (timeKey, interval = 100) {
-    const cur = Date.now()
-    if (!this[timeKey] || cur - this[timeKey] >= interval) {
-      this[timeKey] = cur
-      return true
-    }
-    return false
-  }
-
   getValidValue (val, min = 0, max = 40) {
     if (val < min) {
       return min
