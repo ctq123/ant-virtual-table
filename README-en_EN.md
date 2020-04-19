@@ -2,7 +2,7 @@
 
 English | [简体中文](./README.md) 
 
-This is an ant.design virtual table, which is used to solve the problem of page jamming during big data rendering. This component encapsulates the Table component in ant.desigin and its properties are completely consistent with the original component Table [AntDesign Table](https://ant.design/components/table-cn/). The example handles rendering 10 million pieces of data, and the page is very smooth.
+This is an ant.design virtual table, which is used to solve the problem of page jamming during big data rendering. This component encapsulates the Table component in ant.desigin and its properties are completely consistent with the original component Table [AntDesign Table](https://ant.design/components/table-cn/), it allows you to use a virtual table like a normal table. The example handles rendering 10 million pieces of data, and the page is very smooth. [online demo](https://codesandbox.io/s/antdxunibiao-demo-rj5qc?file=/index.js)
 
 ## Design Notes
 Considering the compatibility issue, the internal scrolling event of the Listening Table determines the position of the sliding line, and does not adopt the new H5 feature IntersectionObserver. Therefore the compatibility issue is better. In addition, the component introduces the loose handle of the loash to deal with the jitter problem. Currently, raf is not used.
