@@ -1,6 +1,6 @@
 {
   "name": "ant-virtual-table",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "main": "dist/index.js",
   "directories": {
@@ -10,6 +10,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "start": "webpack-dev-server --mode development --open --port 3001",
+    "analyzer": "webpack --mode production",
     "prepublish": "babel src -d dist --copy-files"
   },
   "jest": {

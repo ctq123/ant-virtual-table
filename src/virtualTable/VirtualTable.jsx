@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import ReactDOM from 'react-dom'
-import { throttle } from 'lodash'
+import throttle from 'lodash/throttle';
 import BaseTable from './BaseTable'
 
 class VirtualTable extends PureComponent {

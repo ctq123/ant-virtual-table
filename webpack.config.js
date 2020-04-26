@@ -1,5 +1,6 @@
 const path = require('path')
 const htmlWebpackPlugin = require('html-webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const hwp = new htmlWebpackPlugin({
   template: path.join(__dirname, 'examples/src/index.html'),
   filename: './index.html'
@@ -17,7 +18,7 @@ module.exports = {
       use: ['style-loader', 'css-loader']
     }]
   },
-  plugins: [hwp],
+  plugins: [hwp, new BundleAnalyzerPlugin()],
   resolve: {
     extensions: ['.js', '.jsx']
   },
