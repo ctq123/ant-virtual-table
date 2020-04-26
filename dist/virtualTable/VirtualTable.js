@@ -16,7 +16,9 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _lodash = require('lodash');
+var _throttle = require('lodash/throttle');
+
+var _throttle2 = _interopRequireDefault(_throttle);
 
 var _BaseTable = require('./BaseTable');
 
@@ -100,7 +102,7 @@ var VirtualTable = function (_PureComponent) {
       this.refFixedLeftScroll = fixedEles && fixedEles.length ? fixedEles[0] : null;
       this.refFixedRightScroll = fixedEles && fixedEles.length > 1 ? fixedEles[1] : null;
 
-      this.listenEvent = (0, _lodash.throttle)(this.handleScrollEvent, 50);
+      this.listenEvent = (0, _throttle2.default)(this.handleScrollEvent, 50);
 
       if (this.refScroll) {
         this.refScroll.addEventListener('scroll', this.listenEvent);
@@ -243,18 +245,6 @@ var VirtualTable = function (_PureComponent) {
           this.sameSlideHeightCount = 0;
         }
       }
-    }
-  }, {
-    key: 'checkValidIntervalTime',
-    value: function checkValidIntervalTime(timeKey) {
-      var interval = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100;
-
-      var cur = Date.now();
-      if (!this[timeKey] || cur - this[timeKey] >= interval) {
-        this[timeKey] = cur;
-        return true;
-      }
-      return false;
     }
   }, {
     key: 'getValidValue',
