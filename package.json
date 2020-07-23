@@ -1,5 +1,5 @@
 {
-  "name": "ant-virtual-table",
+  "name": "ant-virtual-table-module",
   "version": "0.1.10",
   "description": "",
   "main": "dist/index.js",
