@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/suminhohu/ant-virtual-table.git"
+    "url": "git+https://github.com/ctq123/ant-virtual-table.git"
   },
   "keywords": [
     "virtual-table",
@@ -43,9 +43,9 @@
   "author": "tqcheng",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/suminhohu/ant-virtual-table/issues"
+    "url": "https://github.com/ctq123/ant-virtual-table/issues"
   },
-  "homepage": "https://github.com/suminhohu/ant-virtual-table#readme",
+  "homepage": "https://github.com/ctq123/ant-virtual-table#readme",
   "files": [
     "dist"
   ],
