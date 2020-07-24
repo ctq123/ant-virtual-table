@@ -1,5 +1,6 @@
 # .npmignore
 # src
+# example1.gif
 examples
 .babelrc
 .gitignore
