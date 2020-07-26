@@ -4,13 +4,13 @@ sudo: false
 
 notifications:
   email:
-  - chengtianqing123@sina.cn
+    - sumin1500160640@gmail.com
 
 node_js:
   - "4"
 
 install:
-  - npm install -g codecov 
+  - npm install -g codecov
 
 script:
   - codecov
