@@ -1,5 +1,7 @@
 # ant-virtual-table
 
+## Tip: No longer maintained, antd4 has an alternative
+
 English | [简体中文](./README.md) 
 
 This is an ant.design virtual table, which is used to solve the problem of page jamming during big data rendering. This component encapsulates the Table component in ant.desigin and its properties are completely consistent with the original component Table [AntDesign Table](https://ant.design/components/table-cn/), it allows you to use a virtual table like a normal table. The example handles rendering 10 million pieces of data, and the page is very smooth. [online demo](https://codesandbox.io/s/antdxunibiao-demo-rj5qc?file=/index.js)
