@@ -1,5 +1,7 @@
 # ant-virtual-table
 
+## 提示：已不再维护，antd4已有替代方案
+
 [English](./README-en_EN.md) | 简体中文
 
 这是一个ant的虚拟表格，用于解决大数据渲染时页面卡顿的问题，本组件是对ant.desigin中Table组件进行一层封装，属性完全与原组件Table保持一致 [AntDesign Table](https://ant.design/components/table-cn/)，可以让你像使用普通table一样使用虚拟table。例子中处理渲染1000万条数据，页面也非常流畅。[在线demo](https://codesandbox.io/s/antdxunibiao-demo-rj5qc?file=/index.js)
